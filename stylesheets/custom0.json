@@ -1,0 +1,29 @@
+[
+    {
+        "selector": "node",
+        "style": {
+            "shape": "ellipse",
+            "background-color": "data(node_color)",
+            "label": "data(name)",
+            "color": "black",
+            "text-halign": "center",
+            "text-valign": "center",
+            "text-rotation": "data(rotation)",
+            "text-justification": "data(text_just)",
+            "border-color": "black",
+            "border-width": "1",
+            "text-wrap":"wrap"
+        }
+    },
+    {
+    	"selector": "edge",
+    	"style": {
+    		"line-color": "black",
+    		"width": "data(edge_thick)",
+    		"opacity": "data(edge_trans)",
+    		"curve-style": "unbundled-bezier",
+    		"edge-distances": "intersection",
+    		"control-point-distances": "data(center_dist)"
+    	}
+    }
+]

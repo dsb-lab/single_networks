@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="#"> <!-- fixes some console.log error -->
+
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="css/skeleton.css" />
+  <link rel="stylesheet" href="css/font-awesome.css" />
+  <link rel="stylesheet" href="css/open-sans.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/tooltipster.bundle.min.css" />
+
+  <script src="js/cytoscape.min.js"></script>
+  <script src="js/cola.js"></script>
+  <script src="js/cytoscape-cola.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/tooltipster.bundle.min.js"></script>
+  <script src="js/index.js"></script>
+
+  <title>Network Pathways</title>
+</head>
+
+<body>
+  <h1>Network Pathways</h1>
+
+  <div id="cy" class="main">
+  </div>
+
+  <div class="tools">
+    <h2>Data</h2>
+
+    <p>Choose which subset to display, including Healthy Controls and MS Patients. Each option shows the top pathways for that subset.</p>
+
+    <label for="data" class="tooltip u-pull-left" title="Switch to a new dataset">Active dataset</label>
+    <div class="u-cf"></div>
+    <select class id="data">
+        <option value="network_clin_pats.json">Clinical: All MS Patients</option>
+        <option value="network_clin_mild.json">Clinical: Mild MS Patients</option>
+        <option value="network_clin_severe.json">Clinical: Severe MS Patients</option>
+        <option value="network_clin_pms.json">Clinical: Progressive MS</option>
+        <option value="network_clin_rms.json">Clinical: Relapse-Remitting MS</option>
+        <option value="network_clin_notreat.json">Clinical: Untreated</option>
+        <option value="network_clin_first.json">Clinical: Low-Efficacy Treatment</option>
+        <option value="network_clin_second.json">Clinical: High-Efficacy Treatment</option>
+
+        <option value="network_imag_pats.json">Imaging: All MS Patients</option>
+        <option value="network_imag_mild.json">Imaging: Mild MS Patients</option>
+        <option value="network_imag_severe.json">Imaging: Severe MS Patients</option>
+        <option value="network_imag_pms.json">Imaging: Progressive MS</option>
+        <option value="network_imag_rms.json">Imaging: Relapse-Remitting MS</option>
+        <option value="network_imag_notreat.json">Imaging: Untreated</option>
+        <option value="network_imag_first.json">Imaging: Low-Efficacy Treatment</option>
+        <option value="network_imag_second.json">Imaging: High-Efficacy Treatment</option>
+
+        <option value="network_cyto_pats.json">Cytomics: All MS Patients</option>
+        <option value="network_cyto_mild.json">Cytomics: Mild MS Patients</option>
+        <option value="network_cyto_severe.json">Cytomics: Severe MS Patients</option>
+        <option value="network_cyto_pms.json">Cytomics: Progressive MS</option>
+        <option value="network_cyto_rms.json">Cytomics: Relapse-Remitting MS</option>
+        <option value="network_cyto_notreat.json">Cytomics: Untreated</option>
+        <option value="network_cyto_first.json">Cytomics: Low-Efficacy Treatment</option>
+        <option value="network_cyto_second.json">Cytomics: High-Efficacy Treatment</option>
+
+        <option value="network_phos_pats.json">Proteomics: All MS Patients</option>
+        <option value="network_phos_mild.json">Proteomics: Mild MS Patients</option>
+        <option value="network_phos_severe.json">Proteomics: Severe MS Patients</option>
+        <option value="network_phos_pms.json">Proteomics: Progressive MS</option>
+        <option value="network_phos_rms.json">Proteomics: Relapse-Remitting MS</option>
+        <option value="network_phos_notreat.json">Proteomics: Untreated</option>
+        <option value="network_phos_first.json">Proteomics: Low-Efficacy Treatment</option>
+        <option value="network_phos_second.json">Proteomics: High-Efficacy Treatment</option>
+
+        <option value="network_gngb_pats.json">Genomics: All MS Patients</option>
+        <option value="network_gngb_mild.json">Genomics: Mild MS Patients</option>
+        <option value="network_gngb_severe.json">Genomics: Severe MS Patients</option>
+        <option value="network_gngb_pms.json">Genomics: Progressive MS</option>
+        <option value="network_gngb_rms.json">Genomics: Relapse-Remitting MS</option>
+        <option value="network_gngb_notreat.json">Genomics: Untreated</option>
+        <option value="network_gngb_first.json">Genomics: Low-Efficacy Treatment</option>
+        <option value="network_gngb_second.json">Genomics: High-Efficacy Treatment</option>
+      </select>
+
+    <h2>Style</h2>
+
+    <p>The <a target="_blank" href="http://js.cytoscape.org/#style">stylesheet</a> is used to specify rules that affect how
+      the elements in the graph look. Select between one of the example stylesheets or specify your own custom stylesheet
+      in the code.</p>
+
+    <label for="style" class="tooltip u-pull-left" title="Switch to a new graph stylesheet">Active stylesheet</label>
+    <div class="u-cf"></div>
+    <select id="style">
+        <option value="custom.json" selected>Custom</option>
+      </select>
+
+    <h2>Layout</h2>
+
+    <p>The <a target="_blank" href="http://js.cytoscape.org/#layouts">layout</a> is used to specify how the nodes are positioned
+      in the viewport. Select between one of the example layouts or specify your own in the code.</p>
+
+    <label for="layout" class="tooltip u-pull-left" title="Change layout">Active layout</label>
+    <div class="u-cf"></div>
+    <select id="layout">
+        <option value="custom" selected>Custom</option>
+        <option value="cola">Force-directed</option>
+        <option value="concentricCentrality">Concentric by centrality</option>
+        <option value="concentricHierarchyCentrality">Hierarchy by centrality</option>
+      </select>
+    <i id="redo-layout" class="fa fa-refresh action-icon tooltip" title="Redo layout"></i>
+
+    <h2>Algorithms</h2>
+
+    <p>Cytoscape.js can analyze data with a variety of <a target="_blank" href="http://js.cytoscape.org/#collection/algorithms">graph theory algorithms</a>,
+      including Breadth-First Search and Depth-First Search.</p>
+
+    <label for="algorithm" class="tooltip u-pull-left" title="Run algorithm. Try running A* a few times to see distances to different nodes">
+        Run algorithm
+      </label>
+    <div class="u-cf"></div>
+    <select id="algorithm">
+        <option value="none" selected>None</option>
+        <option value="bfs">BFS</option>
+        <option value="dfs">DFS</option>
+        <option value="astar">A*</option>
+        <option value="custom">Custom</option>
+      </select>
+    <i id="redo-algorithm" class="fa fa-refresh action-icon tooltip" title="Redo algorithm visualization"></i>
+
+    <h2>Using custom data</h2>
+
+    <p>To use custom data, styles, or layouts, <a target="_blank" href="https://github.com/cytoscape/cytoscape.js-tutorial-demo">clone the repo</a>      and modify <code>datasets/custom.json</code>, <code>js/index.js</code>, or <code>stylesheets/custom.cycss</code>.</p>
+  </div>
+
+  <div class="footer-link">
+    <a target="_blank" href="http://js.cytoscape.org">js.cytoscape.org</a>
+  </div>
+</body>
+
+</html>
