@@ -24,7 +24,6 @@
       cy.add( dataset );
     }
     let applyDatasetFromSelect = () => Promise.resolve( $dataset.value ).then( getDataset ).then( applyDataset );
-    // let applyDatasetFromSelect = () => Promise.resolve( dataFile ).then( getDataset ).then( applyDataset );
 
     // set preset stylesheet
     styleName = 'custom.json'
@@ -60,8 +59,6 @@
     $dataset.addEventListener('change', function(){
       tryPromise( applyDatasetFromSelect ).then( applyStylesheetFromSelect ).then( applyLayoutFromSelect );
     });
-
-    // $stylesheet.addEventListener('change', applyStylesheetFromSelect);
 
     // Keith function for highlighting neighborhood
     cy.on("click", "node", function(event) {
